@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import VerificationInput from "react-verification-input";
 import { toast } from "react-toastify";
 import { Button } from "@mui/material";
-import VerificationInput from "react-verification-input";
 import { COOKIE_TOKEN_KEY, COOKIES_REFRESH_KEY } from "~/constants/config";
-import { setCookie } from "~/actions/cookie-actions";
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { PATHS } from "~/constants/paths";
 import { apiClient, ClientError } from "~/services/client";
+import { setCookie } from '~/actions/cookie-actions';
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 const styles = {
   container:
@@ -56,6 +56,7 @@ const CodeInput = () => {
         router.push(PATHS.HOME);
       }
     } catch (e) {
+      console.log(e);
       if (e instanceof ClientError) {
         toast.error(e.data);
       }

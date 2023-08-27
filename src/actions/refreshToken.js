@@ -1,16 +1,22 @@
-"use server";
+'use server';
+import { COOKIE_TOKEN_KEY, COOKIES_REFRESH_KEY } from '~/constants/config';
+import { apiClient } from '~/services/client';
+import { getCookie, setCookie } from '~/actions/cookie-actions';
 
-import { REST_API_URL } from "~/constants/enviroment";
+export const refreshToken = async () => {
+  const refToken = await getCookie(COOKIES_REFRESH_KEY);
+  const accessToken = await getCookie(COOKIE_TOKEN_KEY);
 
-export const refreshToken = async (data) => {
-  const response = await fetch(`${REST_API_URL}/auth/refreshToken`, {
-    method: "post",
-    headers: {
-      "Content-type": "application/json",
-    },
-    cache: "no-store",
-    body: JSON.stringify(data),
+  if (!refToken || !accessToken) throw new Error('Invalid data');
+
+  const payload = { refreshToken: refToken, accessToken };
+
+  const { data } = await apiClient.post('/auth/refreshToken', payload, {
+    cache: 'no-store',
   });
 
-  return await response.json();
+  // await setCookie(COOKIE_TOKEN_KEY, data.accessToken);
+  // console.log('set cookie', data.accessToken);
+
+  return data;
 };

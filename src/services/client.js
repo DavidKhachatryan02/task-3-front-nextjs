@@ -1,6 +1,5 @@
-import { setCookie } from "~/actions/cookie-actions";
-import { REST_API_URL } from "~/constants/enviroment";
-import { refreshToken } from "./refresh";
+import { REST_API_URL } from '~/constants/enviroment';
+import { refreshToken } from '~/actions/refreshToken';
 
 export class ClientError {
   constructor(status, statusText, data) {
@@ -21,7 +20,7 @@ const client = (config) => {
     const response = await fetch(url, {
       ...config,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         ...(config?.headers && config.headers),
       },
     });
@@ -31,10 +30,6 @@ const client = (config) => {
     if (response.status === 401 && !retry) {
       retry = true;
       const refreshResponse = await refreshToken();
-
-      // cookies().set(COOKIES_REFRESH_KEY, refreshResponse.refreshToken);
-      // await setCookie(COOKIES_REFRESH_KEY, refreshResponse.refreshToken);
-      // await setCookie(COOKIE_TOKEN_KEY, refreshResponse.accessToken);
 
       const { data: response } = await get(path, {
         ...config,
@@ -60,9 +55,9 @@ const client = (config) => {
 
     const response = await fetch(url, {
       ...config,
-      method: "post",
+      method: 'post',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         ...(config?.headers && config.headers),
       },
       body: JSON.stringify(body),

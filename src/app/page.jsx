@@ -1,15 +1,13 @@
-import { COOKIE_TOKEN_KEY } from "~/constants/config";
-import { PATHS } from "~/constants/paths";
-import { fetchUser } from "~/actions/fetchUser";
-import { getCookie } from "~/actions/cookie-actions";
-import { ClientError } from "~/services/client";
-
-import UserSidebar from "./_components/UserSidebar";
-import UserInfo from "./_components/UserInfo";
-import Navigate from "~/ui/Navigate";
+import { COOKIE_TOKEN_KEY } from '~/constants/config';
+import { PATHS } from '~/constants/paths';
+import { fetchUser } from '~/actions/fetchUser';
+import { getCookie } from '~/actions/cookie-actions';
+import Navigate from '~/ui/Navigate';
+import UserSidebar from './_components/UserSidebar';
+import UserInfo from './_components/UserInfo';
 
 const styles = {
-  container: "h-screen flex flex-row ",
+  container: 'h-screen flex flex-row ',
 };
 
 const getUser = async () => {
@@ -18,9 +16,7 @@ const getUser = async () => {
 
     return user;
   } catch (e) {
-    if (e instanceof ClientError) {
-      console.log(e);
-    }
+    console.log(e);
   }
 };
 
