@@ -9,8 +9,12 @@ const styles = {
   container: "h-screen flex flex-row ",
 };
 
-const UserSidebar = dynamic(() => import("./_components/UserSidebar"));
-const UserInfo = dynamic(() => import("./_components/UserInfo"));
+const UserSidebar = dynamic(() => import("./_components/UserSidebar"),{
+  loading: () => <p>Loading...</p>,
+});
+const UserInfo = dynamic(() => import("./_components/UserInfo"),{
+  loading: () => <p>Loading...</p>,
+});
 
 const getUser = async () => {
   try {

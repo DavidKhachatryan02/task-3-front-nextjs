@@ -4,8 +4,12 @@ import Navigate from "~/ui/Navigate";
 import { PATHS } from "~/constants/paths";
 import { COOKIES_TOKEN_KEY } from "~/constants/config";
 
-const LoginInput = dynamic(() => import("./_compoents/LoginInput"));
-const LoginPageLeftSplit = dynamic(() => import("~/ui/LoginPageLeftSplit"));
+const LoginInput = dynamic(() => import("./_compoents/LoginInput"),{
+  loading: () => <p>Loading...</p>,
+});
+const LoginPageLeftSplit = dynamic(() => import("~/ui/LoginPageLeftSplit"),{
+  loading: () => <p>Loading...</p>,
+});
 
 const styles = { container: "grid grid-cols-1 md:grid-cols-2 h-screen" };
 
