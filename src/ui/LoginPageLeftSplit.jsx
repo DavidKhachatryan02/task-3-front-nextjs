@@ -1,5 +1,5 @@
 import Image from "next/image";
-import LoginPageImg from "../assets/LoginPageImg.png";
+import LoginPageImg from "~/../public/LoginPageImg.png";
 
 const styles = {
   container: "bg-neutral-100 flex flex-col justify-center items-center",
