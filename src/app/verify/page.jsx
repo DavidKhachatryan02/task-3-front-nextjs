@@ -1,5 +1,8 @@
-import LoginPageLeftSplit from "~/ui/Sidebar";
+import dynamic from "next/dynamic";
 import CodeInput from "./_components/CodeInput";
+
+const LoginPageLeftSplit = dynamic(() => import ("~/ui/LoginPageLeftSplit"));
+
 
 const styles = { container: "grid grid-cols-1 md:grid-cols-2 h-screen " };
 

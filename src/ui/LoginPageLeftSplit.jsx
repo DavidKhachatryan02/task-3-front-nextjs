@@ -7,7 +7,7 @@ const styles = {
   img: "object-scale-down w-full",
 };
 
-const Sidebar = () => {
+const LoginPageLeftSplit = () => {
   return (
     <div className={styles.container}>
       <p className={styles.title}>PLAYGROUND</p>
@@ -22,4 +22,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default LoginPageLeftSplit;
