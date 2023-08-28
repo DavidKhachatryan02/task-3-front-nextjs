@@ -1,5 +1,5 @@
-import { REST_API_URL } from '~/constants/enviroment';
-import { refreshToken } from '~/actions/refreshToken';
+import { REST_API_URL } from "~/constants/enviroment";
+import { refreshToken } from "~/actions/refreshToken";
 
 export class ClientError {
   constructor(status, statusText, data) {
@@ -20,7 +20,7 @@ const client = (config) => {
     const response = await fetch(url, {
       ...config,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         ...(config?.headers && config.headers),
       },
     });
@@ -55,9 +55,9 @@ const client = (config) => {
 
     const response = await fetch(url, {
       ...config,
-      method: 'post',
+      method: "post",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         ...(config?.headers && config.headers),
       },
       body: JSON.stringify(body),
