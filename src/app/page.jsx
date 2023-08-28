@@ -1,4 +1,4 @@
-import { COOKIE_TOKEN_KEY } from "~/constants/config";
+import { COOKIES_TOKEN_KEY } from "~/constants/config";
 import { PATHS } from "~/constants/paths";
 import { fetchUser } from "~/actions/fetchUser";
 import { getCookie } from "~/actions/cookie-actions";
@@ -23,7 +23,8 @@ const getUser = async () => {
 };
 
 const HomePage = async () => {
-  const accessToken = await getCookie(COOKIE_TOKEN_KEY);
+  
+  const accessToken = await getCookie(COOKIES_TOKEN_KEY);
 
   if (!accessToken) {
     return <Navigate path={PATHS.LOGIN} replace />;

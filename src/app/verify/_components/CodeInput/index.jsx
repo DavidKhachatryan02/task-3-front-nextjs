@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import VerificationInput from "react-verification-input";
 import { toast } from "react-toastify";
 import { Button } from "@mui/material";
-import { COOKIE_TOKEN_KEY, COOKIES_REFRESH_KEY } from "~/constants/config";
+import { COOKIES_TOKEN_KEY, COOKIES_REFRESH_KEY } from "~/constants/config";
 import { PATHS } from "~/constants/paths";
 import { apiClient, ClientError } from "~/services/client";
-import { setCookie } from '~/actions/cookie-actions';
+import { setCookie } from "~/actions/cookie-actions";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 const styles = {
@@ -50,7 +50,7 @@ const CodeInput = () => {
           { cache: "no-store" }
         );
 
-        await setCookie(COOKIE_TOKEN_KEY, data.jwt.accessToken);
+        await setCookie(COOKIES_TOKEN_KEY, data.jwt.accessToken);
         await setCookie(COOKIES_REFRESH_KEY, data.jwt.refreshToken);
 
         router.push(PATHS.HOME);

@@ -7,7 +7,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import PermContactCalendarOutlinedIcon from "@mui/icons-material/PermContactCalendarOutlined";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { COOKIE_TOKEN_KEY, COOKIES_REFRESH_KEY } from "~/constants/config";
+import { COOKIES_TOKEN_KEY, COOKIES_REFRESH_KEY } from "~/constants/config";
 import { PATHS } from "~/constants/paths";
 import { removeCookie } from '~/actions/cookie-actions';
 
@@ -26,7 +26,7 @@ const UserSidebar = ({ error }) => {
   const router = useRouter();
 
   const handleLogout = async () => {
-    await removeCookie(COOKIE_TOKEN_KEY);
+    await removeCookie(COOKIES_TOKEN_KEY);
     await removeCookie(COOKIES_REFRESH_KEY);
 
     router.push(PATHS.LOGIN);
