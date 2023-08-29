@@ -1,11 +1,11 @@
-import { Fragment } from "react";
 import { ToastContainer } from "react-toastify";
+import Provider from "./Provider";
 
 export default function RootTemplate({ children }) {
   return (
-    <Fragment>
+    <Provider>
       <ToastContainer />
       {children}
-    </Fragment>
+    </Provider>
   );
 }
