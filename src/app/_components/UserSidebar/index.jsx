@@ -2,14 +2,13 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 import { toast } from "react-toastify";
 import MenuIcon from "@mui/icons-material/Menu";
 import PermContactCalendarOutlinedIcon from "@mui/icons-material/PermContactCalendarOutlined";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { COOKIES_TOKEN_KEY, COOKIES_REFRESH_KEY } from "~/constants/config";
 import { PATHS } from "~/constants/paths";
-import { removeCookie } from '~/actions/cookie-actions';
 
 const styles = {
   navbar:
@@ -26,8 +25,7 @@ const UserSidebar = ({ error }) => {
   const router = useRouter();
 
   const handleLogout = async () => {
-    await removeCookie(COOKIES_TOKEN_KEY);
-    await removeCookie(COOKIES_REFRESH_KEY);
+    await signOut({ redirect: false });
 
     router.push(PATHS.LOGIN);
   };

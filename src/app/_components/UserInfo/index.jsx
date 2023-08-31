@@ -9,18 +9,14 @@ const styles = {
 };
 
 const UserInfo = ({ data }) => {
-  //const { gitHubUserName, slackUserName, ...userDetails } = data;
+  const { gitHubUserName, slackUserName, ...userDetails } = data;
 
   return (
     <div className={styles.container}>
       <p className={styles.title}>My Profile</p>
       <div className={styles.wrapper}>
-        {/* <UserDetails data={userDetails} /> */}
-        <UserDetails />
-
-        <UserAccounts />
-
-        {/* <UserAccounts data={{ gitHubUserName, slackUserName }} /> */}
+        <UserDetails data={userDetails} />
+        <UserAccounts data={{ gitHubUserName, slackUserName }} />
       </div>
     </div>
   );

@@ -1,5 +1,7 @@
 import { REST_API_URL } from "~/constants/enviroment";
 import { refreshToken } from "~/actions/refreshToken";
+import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
 
 export class ClientError {
   constructor(status, statusText, data) {
@@ -17,6 +19,9 @@ const client = (config) => {
     const url = baseUrl + path;
     console.log(`[GET]: ${url}`);
 
+    const session = await getServerSession();
+    console.log("fetch session", session);
+
     const response = await fetch(url, {
       ...config,
       headers: {
@@ -27,20 +32,20 @@ const client = (config) => {
 
     const data = await response.json();
 
-    if (response.status === 401 && !retry) {
-      retry = true;
-      const refreshResponse = await refreshToken();
-
-      const { data: response } = await get(path, {
-        ...config,
-        headers: {
-          Authorization: `Bearer ${refreshResponse.accessToken}`,
-        },
-      });
-
-      retry = false;
-      return { data: response };
-    }
+    // if (response.status === 401 && !retry) {
+    //   retry = true;
+    //   const refreshResponse = await refreshToken();
+    //
+    //   const { data: response } = await get(path, {
+    //     ...config,
+    //     headers: {
+    //       Authorization: `Bearer ${refreshResponse.accessToken}`,
+    //     },
+    //   });
+    //
+    //   retry = false;
+    //   return { data: response };
+    // }
 
     if (!response.ok) {
       throw new ClientError(response.status, response.statusText, data.message);
