@@ -7,9 +7,11 @@ import { toast } from "react-toastify";
 import { Button } from "@mui/material";
 import { COOKIES_TOKEN_KEY, COOKIES_REFRESH_KEY } from "~/constants/config";
 import { PATHS } from "~/constants/paths";
-import { apiClient, ClientError } from "~/services/client";
+import { ClientError } from "~/services/client";
 import { setCookie } from "~/actions/cookie-actions";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import { loginUser } from "~/actions/loginUser";
+import { signIn } from "next-auth/react";
 
 const styles = {
   container:
@@ -43,12 +45,12 @@ const CodeInput = () => {
     try {
       if (isValidCode(code)) {
         const email = sessionStorage.getItem("email");
+        await signIn("credentials", {
+          email,
+          code,
+        });
 
-        const { data } = await apiClient.post(
-          "/auth/login",
-          { email, code },
-          { cache: "no-store" }
-        );
+        const data = await loginUser({ email, code });
 
         await setCookie(COOKIES_TOKEN_KEY, data.jwt.accessToken);
         await setCookie(COOKIES_REFRESH_KEY, data.jwt.refreshToken);

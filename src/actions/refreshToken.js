@@ -1,4 +1,3 @@
-
 import { COOKIES_TOKEN_KEY, COOKIES_REFRESH_KEY } from "~/constants/config";
 import { apiClient } from "~/services/client";
 import { getCookie, setCookie } from "~/actions/cookie-actions";
@@ -18,7 +17,7 @@ export const refreshToken = async () => {
   });
 
   //await setCookie(data.accessToken); //!not WORKING WTFFFFFFFFFFFff
-   //console.log("new ACCESS TOKEN", await getCookie(COOKIES_TOKEN_KEY));
+  //console.log("new ACCESS TOKEN", await getCookie(COOKIES_TOKEN_KEY));
 
   return data;
 };

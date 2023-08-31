@@ -1,11 +1,13 @@
+'use client';
+
 import { ToastContainer } from "react-toastify";
-import Provider from "./Provider";
+import { SessionProvider } from 'next-auth/react';
 
 export default function RootTemplate({ children }) {
   return (
-    <Provider>
+    <SessionProvider>
       <ToastContainer />
       {children}
-    </Provider>
+    </SessionProvider>
   );
 }
