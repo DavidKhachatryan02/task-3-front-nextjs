@@ -9,6 +9,11 @@ import PermContactCalendarOutlinedIcon from "@mui/icons-material/PermContactCale
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { PATHS } from "~/constants/paths";
+<<<<<<< HEAD
+=======
+import { removeCookie } from '~/actions/cookie-actions';
+import { signOut } from "next-auth/react";
+>>>>>>> aeae28ef8ad3c7c5c929a16692c0238e2a98082d
 
 const styles = {
   navbar:
@@ -25,8 +30,12 @@ const UserSidebar = ({ error }) => {
   const router = useRouter();
 
   const handleLogout = async () => {
+<<<<<<< HEAD
     await signOut({ redirect: false });
 
+=======
+    signOut()
+>>>>>>> aeae28ef8ad3c7c5c929a16692c0238e2a98082d
     router.push(PATHS.LOGIN);
   };
 

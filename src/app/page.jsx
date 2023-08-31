@@ -18,11 +18,16 @@ const styles = {
 
 const HomePage = () => {
   const { data: session, status } = useSession();
+<<<<<<< HEAD
   console.log("==================", session?.user, status);
 
   if (status === "unauthenticated") {
     return <Navigate path={PATHS.LOGIN} replace />;
   }
+=======
+  const data = { ...session };
+  console.log("CONSOLE FROM HOMEPAGE", data);
+>>>>>>> aeae28ef8ad3c7c5c929a16692c0238e2a98082d
 
   return (
     <div className={styles.container}>
