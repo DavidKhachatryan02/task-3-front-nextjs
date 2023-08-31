@@ -10,7 +10,7 @@ const styles = {
 };
 
 const UserAccounts = ({ data }) => {
-  const { gitHubUserName, slackUserName } = data;
+  // const { gitHubUserName, slackUserName } = data;
 
   return (
     <div className={styles.container}>
@@ -25,13 +25,13 @@ const UserAccounts = ({ data }) => {
             </InputAdornment>
           ),
         }}
-        value={slackUserName}
+        //value={slackUserName}
         variant="standard"
       />
       <TextField
         disabled
         label="GitHub"
-        value={gitHubUserName}
+        //value={gitHubUserName}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

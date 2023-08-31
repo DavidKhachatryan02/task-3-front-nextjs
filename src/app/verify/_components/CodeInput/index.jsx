@@ -45,17 +45,20 @@ const CodeInput = () => {
     try {
       if (isValidCode(code)) {
         const email = sessionStorage.getItem("email");
-        await signIn("credentials", {
+        const user = await signIn("credentials", {
           email,
           code,
+          redirect: false,
         });
+        if (user) {
+          router.push(PATHS.HOME);
+        }
+        // const data = await loginUser({ email, code });
 
-        const data = await loginUser({ email, code });
+        // await setCookie(COOKIES_TOKEN_KEY, data.jwt.accessToken);
+        // await setCookie(COOKIES_REFRESH_KEY, data.jwt.refreshToken);
 
-        await setCookie(COOKIES_TOKEN_KEY, data.jwt.accessToken);
-        await setCookie(COOKIES_REFRESH_KEY, data.jwt.refreshToken);
-
-        router.push(PATHS.HOME);
+        //
       }
     } catch (e) {
       console.log(e);

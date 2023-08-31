@@ -1,9 +1,10 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 
 import NextAuth from "next-auth";
-import { fetchUser } from "~/actions/fetchUser";
+import { setCookie } from "~/actions/cookie-actions";
+// import { fetchUser } from "~/actions/fetchUser";
 
-async function refreshAccessToken(tokens) {
+const refreshAccessToken = async (tokens) => {
   try {
     const { accessToken, refreshToken } = tokens;
     const tokenResponse = await fetch(
@@ -31,7 +32,18 @@ async function refreshAccessToken(tokens) {
       error: "RefreshAccessTokenError",
     };
   }
-}
+};
+
+const fetchUser = async (accessToken) => {
+  const response = await fetch("http://localhost:3000/auth/getMe", {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  const userData = await response.json();
+  return userData;
+};
 
 const authOptions = {
   providers: [
@@ -41,6 +53,7 @@ const authOptions = {
         email: { label: "Email", type: "text" },
         code: { label: "Code", type: "text" },
       },
+
       async authorize(credentials, req) {
         const { email, code } = credentials;
 
@@ -57,33 +70,33 @@ const authOptions = {
 
         const data = await res.json();
 
-        console.log(data.jwt.accessToken);
-
         if (res.ok && data) {
-          const response = await fetch("http://localhost:3000/auth/getMe", {
-            headers: {
-              Authorization: `Bearer ${data.jwt.accessToken}`,
-            },
-          });
+          const userData = await fetchUser(data.jwt.accessToken);
 
-          const userData = await response.json();
-          console.log(userData);
-          return userData;
+          console.log("AUTH ROUTE", userData);
+
+          return seesion;
+        } else if (res.status === 401) {
+          newTokens = await refreshAccessToken(data.jwt);
+
+          const userData = await fetchUser(newTokens.accessToken);
+
+          return { user: userData };
         } else return null;
       },
       callbacks: {
         async jwt({ token, user }) {
+          console.log("-----------", userData);
           if (!user) {
             token.accessToken = user.data.accessToken;
             token.refreshToken = user.data.refreshToken;
             const newTokens = await refreshAccessToken(token);
             return newTokens;
           }
+          return { ...user };
         },
-        async session({ session, token, user }) {
-          // Send properties to the client, like an access_token from a provider.
-          session.user = token;
-          return session;
+        async session({ session, user, token }) {
+          return (session.user = user);
         },
       },
       session: { strategy: "jwt" },
