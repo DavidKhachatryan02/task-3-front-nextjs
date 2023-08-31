@@ -38,7 +38,8 @@ const HomePage = () => {
 
   //const userData = await getUser();
   const { data: session, status } = useSession();
-  console.log("==================", session);
+  const data = { ...session };
+  console.log("CONSOLE FROM HOMEPAGE", data);
 
   return (
     <div className={styles.container}>

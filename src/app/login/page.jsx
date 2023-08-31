@@ -4,7 +4,7 @@ import Navigate from '~/ui/Navigate';
 import { PATHS } from '~/constants/paths';
 import { COOKIES_TOKEN_KEY } from '~/constants/config';
 
-const LoginInput = dynamic(() => import('./_compoents/LoginInput'), {
+const LoginInput = dynamic(() => import('./_components/LoginInput'), {
   loading: () => <p>Loading...</p>,
 });
 const LoginPageLeftSplit = dynamic(() => import('~/ui/LoginPageLeftSplit'), {

@@ -71,11 +71,11 @@ const authOptions = {
         const data = await res.json();
 
         if (res.ok && data) {
-          const userData = await fetchUser(data.jwt.accessToken);
+          const user = await fetchUser(data.jwt.accessToken);
 
-          console.log("AUTH ROUTE", userData);
+          console.log("AUTH ROUTE", user);
 
-          return seesion;
+          return user;
         } else if (res.status === 401) {
           newTokens = await refreshAccessToken(data.jwt);
 
@@ -85,18 +85,19 @@ const authOptions = {
         } else return null;
       },
       callbacks: {
-        async jwt({ token, user }) {
-          console.log("-----------", userData);
-          if (!user) {
-            token.accessToken = user.data.accessToken;
-            token.refreshToken = user.data.refreshToken;
-            const newTokens = await refreshAccessToken(token);
-            return newTokens;
-          }
-          return { ...user };
+        async jwt({ token, user, account }) {
+          // if (!user) {
+          //   token.accessToken = user.data.accessToken;
+          //   token.refreshToken = user.data.refreshToken;
+          //   const newTokens = await refreshAccessToken(token);
+          //   return newTokens;
+          // }
+          console.log({ account });
+
+          return { ...token, ...user };
         },
         async session({ session, user, token }) {
-          return (session.user = user);
+          session.user = token.user;
         },
       },
       session: { strategy: "jwt" },

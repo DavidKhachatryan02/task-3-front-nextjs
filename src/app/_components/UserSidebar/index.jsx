@@ -10,6 +10,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { COOKIES_TOKEN_KEY, COOKIES_REFRESH_KEY } from "~/constants/config";
 import { PATHS } from "~/constants/paths";
 import { removeCookie } from '~/actions/cookie-actions';
+import { signOut } from "next-auth/react";
 
 const styles = {
   navbar:
@@ -26,9 +27,7 @@ const UserSidebar = ({ error }) => {
   const router = useRouter();
 
   const handleLogout = async () => {
-    await removeCookie(COOKIES_TOKEN_KEY);
-    await removeCookie(COOKIES_REFRESH_KEY);
-
+    signOut()
     router.push(PATHS.LOGIN);
   };
 
