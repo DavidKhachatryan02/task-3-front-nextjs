@@ -4,14 +4,12 @@ import { fetchUser } from "~/actions/fetchUser";
 import { getCookie } from "~/actions/cookie-actions";
 import Navigate from "~/ui/Navigate";
 import dynamic from "next/dynamic";
+import UserSidebar from "./_components/UserSidebar";
 
 const styles = {
   container: "h-screen flex flex-row ",
 };
 
-const UserSidebar = dynamic(() => import("./_components/UserSidebar"), {
-  loading: () => <p>Loading...</p>,
-});
 const UserInfo = dynamic(() => import("./_components/UserInfo"), {
   loading: () => <p>Loading...</p>,
 });
