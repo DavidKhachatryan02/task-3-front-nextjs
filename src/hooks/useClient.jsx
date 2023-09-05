@@ -1,5 +1,10 @@
+"use client";
+
+import { useState, useCallback } from "react";
 import { REST_API_URL } from "~/constants/enviroment";
-import { refreshToken } from "~/actions/refreshToken";
+import { RefreshToken } from "~/actions/refreshToken";
+// import { setCookie } from "~/actions/cookie-actions";
+// import { COOKIES_TOKEN_KEY } from "~/constants/config";
 
 export class ClientError {
   constructor(status, statusText, data) {
@@ -9,13 +14,11 @@ export class ClientError {
   }
 }
 
-const client = (config) => {
-  const { baseUrl } = config;
+const client = (baseUrl) => {
   let retry = false;
 
   const get = async (path, config) => {
     const url = baseUrl + path;
-    console.log(`[GET]: ${url}`);
 
     const response = await fetch(url, {
       ...config,
@@ -29,7 +32,7 @@ const client = (config) => {
 
     if (response.status === 401 && !retry) {
       retry = true;
-      const refreshResponse = await refreshToken();
+      const refreshResponse = await RefreshToken();
 
       const { data: response } = await get(path, {
         ...config,
@@ -51,7 +54,6 @@ const client = (config) => {
 
   const post = async (path, body, config) => {
     const url = baseUrl + path;
-    console.log(`[POST]: ${url}`);
 
     const response = await fetch(url, {
       ...config,
@@ -66,11 +68,9 @@ const client = (config) => {
     const data = await response.json();
 
     if (!response.ok) {
-      console.log({ retry });
       if (response.status === 401 && !retry) {
-        const { data: refreshResponse } = await refreshToken();
+        const { data: refreshResponse } = await RefreshToken();
         retry = true;
-        console.log(refreshResponse);
 
         const { data: response } = await get(path, {
           ...config,
@@ -95,6 +95,20 @@ const client = (config) => {
   };
 };
 
-export const apiClient = client({
-  baseUrl: REST_API_URL,
-});
+export const useApiClient = () => {
+  const [apiClient] = useState(() => client(REST_API_URL));
+
+  const get = useCallback(
+    (path, config) => apiClient.get(path, config),
+    [apiClient]
+  );
+  const post = useCallback(
+    (path, body, config) => apiClient.post(path, body, config),
+    [apiClient]
+  );
+
+  return {
+    get,
+    post,
+  };
+};

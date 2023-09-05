@@ -5,12 +5,12 @@ import { useRouter } from "next/navigation";
 import VerificationInput from "react-verification-input";
 import { toast } from "react-toastify";
 import { Button } from "@mui/material";
-import { COOKIES_TOKEN_KEY, COOKIES_REFRESH_KEY } from "~/constants/config";
 import { PATHS } from "~/constants/paths";
-import { ClientError } from "~/services/client";
+import { ClientError } from "~/hooks/useClient";
+import { COOKIES_TOKEN_KEY, COOKIES_REFRESH_KEY } from "~/constants/config";
 import { setCookie } from "~/actions/cookie-actions";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import { loginUser } from "~/actions/loginUser";
+import { useApiClient } from "~/hooks/useClient";
 
 const styles = {
   container:
@@ -28,6 +28,8 @@ const isValidCode = (code) => {
 
 const CodeInput = () => {
   const router = useRouter();
+
+  const { post } = useApiClient();
   const [code, setCode] = useState("");
 
   const clearCode = () => {
@@ -45,7 +47,11 @@ const CodeInput = () => {
       if (isValidCode(code)) {
         const email = sessionStorage.getItem("email");
 
-        const data = await loginUser({ email, code });
+        const { data } = await post(
+          "/auth/login",
+          { email, code },
+          { cache: "no-store" }
+        );
 
         await setCookie(COOKIES_TOKEN_KEY, data.jwt.accessToken);
         await setCookie(COOKIES_REFRESH_KEY, data.jwt.refreshToken);

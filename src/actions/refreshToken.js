@@ -1,9 +1,12 @@
+"use client";
 
 import { COOKIES_TOKEN_KEY, COOKIES_REFRESH_KEY } from "~/constants/config";
-import { apiClient } from "~/services/client";
+import { useApiClient } from "~/hooks/useClient";
 import { getCookie, setCookie } from "~/actions/cookie-actions";
 
-export const refreshToken = async () => {
+export const RefreshToken = async () => {
+  const { post } = useApiClient();
+
   const refToken = await getCookie(COOKIES_REFRESH_KEY);
   const accessToken = await getCookie(COOKIES_TOKEN_KEY);
 
@@ -13,12 +16,12 @@ export const refreshToken = async () => {
 
   const payload = { refreshToken: refToken, accessToken };
 
-  const { data } = await apiClient.post("/auth/refreshToken", payload, {
+  const { data } = await post("/auth/refreshToken", payload, {
     cache: "no-store",
   });
 
-  //await setCookie(data.accessToken); //!not WORKING WTFFFFFFFFFFFff
-   //console.log("new ACCESS TOKEN", await getCookie(COOKIES_TOKEN_KEY));
+  await setCookie(data.accessToken); //!not WORKING WTFFFFFFFFFFFff
+  console.log("new ACCESS TOKEN :", await getCookie(COOKIES_TOKEN_KEY));
 
   return data;
 };
