@@ -9,7 +9,7 @@ import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { COOKIES_TOKEN_KEY, COOKIES_REFRESH_KEY } from "~/constants/config";
 import { PATHS } from "~/constants/paths";
-import { removeCookie } from '~/actions/cookie-actions';
+import { removeCookie } from "~/actions/cookie-actions";
 
 const styles = {
   navbar:
@@ -22,7 +22,7 @@ const styles = {
 
 const iconColorWhite = "#f3e5f5";
 
-const UserSidebar = ({ error }) => {
+const UserSidebar = () => {
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -31,12 +31,6 @@ const UserSidebar = ({ error }) => {
 
     router.push(PATHS.LOGIN);
   };
-
-  useEffect(() => {
-    if (error) {
-      toast.error(error);
-    }
-  }, [error]);
 
   return (
     <div className={styles.navbar}>

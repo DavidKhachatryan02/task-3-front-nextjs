@@ -58,7 +58,7 @@ const CodeInput = () => {
         router.push(PATHS.HOME);
       }
     } catch (e) {
-      toast.error(e);
+      toast.error(e.message);
     }
   };
 

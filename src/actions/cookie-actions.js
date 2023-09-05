@@ -2,10 +2,6 @@
 
 import { cookies } from "next/headers";
 
-export const hasKey = async (key) => {
-  return cookies().has(key);
-};
-
 export const setCookie = async (key, data) => {
   cookies().set(key, data);
 };

@@ -2,7 +2,6 @@
 
 import { REST_API_URL } from "~/constants/enviroment";
 import { RefreshToken } from "./api/refreshToken";
-import { COOKIES_TOKEN_KEY } from "~/constants/config";
 
 export class ClientError {
   constructor(status, statusText, data) {
