@@ -10,8 +10,6 @@ export const RefreshToken = async () => {
   const refToken = await getCookie(COOKIES_REFRESH_KEY);
   const accessToken = await getCookie(COOKIES_TOKEN_KEY);
 
-  console.log("OLD ACCESS TOKEN :", accessToken);
-
   if (!refToken || !accessToken) throw new Error("Invalid data");
 
   const payload = { refreshToken: refToken, accessToken };
@@ -20,8 +18,7 @@ export const RefreshToken = async () => {
     cache: "no-store",
   });
 
-  await setCookie(data.accessToken); //!not WORKING WTFFFFFFFFFFFff
-  console.log("new ACCESS TOKEN :", await getCookie(COOKIES_TOKEN_KEY));
+  await setCookie(COOKIES_TOKEN_KEY, data.accessToken); //!not WORKING WTFFFFFFFFFFFff
 
   return data;
 };

@@ -37,8 +37,8 @@ const UserInfo = () => {
     };
 
     getUser();
-  }, [get]);
-  
+  }, []);
+
   const { gitHubUserName, slackUserName, ...userDetails } = userData;
 
   return (

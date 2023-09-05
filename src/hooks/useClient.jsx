@@ -1,10 +1,8 @@
 "use client";
 
-import { useState, useCallback } from "react";
 import { REST_API_URL } from "~/constants/enviroment";
 import { RefreshToken } from "~/actions/refreshToken";
-// import { setCookie } from "~/actions/cookie-actions";
-// import { COOKIES_TOKEN_KEY } from "~/constants/config";
+import { COOKIES_TOKEN_KEY } from "~/constants/config";
 
 export class ClientError {
   constructor(status, statusText, data) {
@@ -96,19 +94,10 @@ const client = (baseUrl) => {
 };
 
 export const useApiClient = () => {
-  const [apiClient] = useState(() => client(REST_API_URL));
-
-  const get = useCallback(
-    (path, config) => apiClient.get(path, config),
-    [apiClient]
-  );
-  const post = useCallback(
-    (path, body, config) => apiClient.post(path, body, config),
-    [apiClient]
-  );
+  const apiClient = client(REST_API_URL);
 
   return {
-    get,
-    post,
+    get: apiClient.get,
+    post: apiClient.post,
   };
 };
