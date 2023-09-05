@@ -6,7 +6,6 @@ import VerificationInput from "react-verification-input";
 import { toast } from "react-toastify";
 import { Button } from "@mui/material";
 import { PATHS } from "~/constants/paths";
-import { ClientError } from "~/hooks/useClient";
 import { COOKIES_TOKEN_KEY, COOKIES_REFRESH_KEY } from "~/constants/config";
 import { setCookie } from "~/actions/cookie-actions";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
@@ -59,10 +58,7 @@ const CodeInput = () => {
         router.push(PATHS.HOME);
       }
     } catch (e) {
-      console.log(e);
-      if (e instanceof ClientError) {
-        toast.error(e.data);
-      }
+      toast.error(e);
     }
   };
 

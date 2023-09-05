@@ -6,6 +6,7 @@ import UserDetails from "../UserDetails";
 import { useApiClient } from "~/hooks/useClient";
 import { getCookie } from "~/actions/cookie-actions";
 import { COOKIES_TOKEN_KEY } from "~/constants/config";
+import { toast } from "react-toastify";
 
 const styles = {
   container:
@@ -15,29 +16,35 @@ const styles = {
 };
 
 const UserInfo = () => {
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState(null);
   const { get } = useApiClient();
 
   useEffect(() => {
     const getUser = async () => {
-      const accessToken = await getCookie(COOKIES_TOKEN_KEY);
+      try {
+        const accessToken = await getCookie(COOKIES_TOKEN_KEY);
 
-      if (!accessToken) {
-        throw new Error("Access token not defined");
+        if (!accessToken) {
+          throw new Error("Access token not defined");
+        }
+
+        const { data } = await get("/auth/getMe", {
+          cache: "no-store",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        setUserData(data);
+      } catch (error) {
+        toast.error("Error fetching user data:", error);
       }
-
-      const { data } = await get("/auth/getMe", {
-        cache: "no-store",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      setUserData(data);
     };
 
     getUser();
   }, []);
+
+  if (!userData) return null;
 
   const { gitHubUserName, slackUserName, ...userDetails } = userData;
 

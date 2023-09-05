@@ -18,7 +18,6 @@ export const RefreshToken = async () => {
     cache: "no-store",
   });
 
-  await setCookie(COOKIES_TOKEN_KEY, data.accessToken); //!not WORKING WTFFFFFFFFFFFff
-
+  await setCookie(COOKIES_TOKEN_KEY, data.accessToken); 
   return data;
 };
