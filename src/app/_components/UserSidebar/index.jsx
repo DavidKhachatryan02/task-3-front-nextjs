@@ -1,8 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
 import MenuIcon from "@mui/icons-material/Menu";
 import PermContactCalendarOutlinedIcon from "@mui/icons-material/PermContactCalendarOutlined";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
